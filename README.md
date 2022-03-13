@@ -3,4 +3,12 @@ Se contruyó un modelo de probabilidad de ocurrencia para _Vicugna vicugna_ y su
 biomod2 ofrece la posibilidad de ejecutar 10 técnicas de modelado de última generación para describir y modelar las relaciones entre una especie determinada y su entorno. Es un intento de definir el nicho ecológico de una especie en particular usando variables ambientales (temperatura, precipitación, ...) con el uso potencial de hacer, por ejemplo, proyecciones futuras bajo escenarios de cambio de uso de suelo y clima. Aunque se ha desarrollado principalmente para ecólogos que tienen como objetivo predecir la distribución de especies, biomod2 también se puede utilizar para modelar cualquier dato binomial (por ejemplo, gen, marcadores, ecosistema...) en función de cualquier variable explicativa.
 
 ## **Variable respuesta**
-La variable respuesta está conformada a 1657 puntos de presencia de la especie, donde 792 corresponden al linaje _vicugna_, 465 al linaje _mensalis_ y 400 al linaje híbrido, además de un set de  `5 * n` puntos de background generado en cada ejecución y distribuídos aleatóreamente dentro de la zona de estudio. Los datos fueron obtenidos de ...  
+La variable respuesta está conformada a 1657 puntos de presencia de la especie, donde 792 corresponden al linaje _vicugna_, 465 al linaje _mensalis_ y 400 al linaje híbrido, obtenidos de .... Además, un set de  `5 * n` puntos de background, donde n es el número de puntos utilizados para la construcción de la instancia del modelo, es generado en cada instancia y distribuídos aleatóreamente dentro de la zona de estudio.
+
+## **Variable predictoras**
+Se utilizaron las variables bioclimáticas disponibles en [CHELSA](https://chelsa-climate.org/) como variables predictoras y posteriormente, mediante un [análisis de componentes principales (PCA)](https://www.sciencedirect.com/science/article/abs/pii/S0167947304002014?via%3Dihub) se determinó el set de variables más relevante para cada uno de los linajes. 
+
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Mensalis  | bio3, bio7, bio9, bio10, bio13, bio15  |
+| Content Cell  | Content Cell  |
