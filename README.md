@@ -76,6 +76,27 @@ myBiomodModelOut=BIOMOD_Modeling(
   VarImport = 5,
   models.eval.meth = c("KAPPA", "TSS", "ROC","ACCURACY"),
   SaveObj = TRUE,
-  do.full.models = TRUE,
-  )
+  do.full.models = TRUE)
 ```
+
+Una vez construídos los modelos individuales (Maxent, RF, GBM), procedemos a generar un [ensamble de modelos](https://www.rdocumentation.org/packages/biomod2/versions/3.5.1/topics/BIOMOD_EnsembleModeling):
+
+```R
+myBiomodEM=BIOMOD_EnsembleModeling(myBiomodModelOut,
+  chosen.models = 'all',
+  prob.mean=TRUE,
+  prob.cv =TRUE,
+  VarImport=5)
+```
+
+y finalmente una proyección de la ocurrencia utilizando el ensamble generado, con las variables bioclimáticas del escenario actual: 
+```R
+myBiomodProjection <- BIOMOD_Projection(
+  modeling.output = myBiomodModelOut,
+  new.env = myExpl,
+  proj.name = 'curr',
+  compress = TRUE,
+  build.clamping.mask = FALSE,
+  keep.in.memory=FALSE)
+```
+
