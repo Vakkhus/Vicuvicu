@@ -68,7 +68,7 @@ if (i=="vicugna"){ds=10}
 
 Luego procedemos a la [construcción del modelo](https://www.rdocumentation.org/packages/biomod2/versions/3.5.1/topics/BIOMOD_Modeling), seleccionando el número de repeticiones `NbRunEval` para cada set de pseudoausencias creado, las métricas de evaluación `models.eval.meth` y los modelos `models` a utilizar: 
 ```R
-myBiomodModelOut=BIOMOD_Modeling(
+myBiomodModelOut <- BIOMOD_Modeling(
   data=myBiomodData,
   models = c("GBM","RF","MAXENT.Phillips"),
   NbRunEval=20,
@@ -82,14 +82,14 @@ myBiomodModelOut=BIOMOD_Modeling(
 Una vez construídos los modelos individuales (Maxent, RF, GBM), procedemos a generar un [ensamble de modelos](https://www.rdocumentation.org/packages/biomod2/versions/3.5.1/topics/BIOMOD_EnsembleModeling):
 
 ```R
-myBiomodEM=BIOMOD_EnsembleModeling(myBiomodModelOut,
+myBiomodEM <- BIOMOD_EnsembleModeling(myBiomodModelOut,
   chosen.models = 'all',
   prob.mean=TRUE,
   prob.cv =TRUE,
   VarImport=5)
 ```
 
-y finalmente una proyección de la ocurrencia utilizando el ensamble generado, con las variables bioclimáticas del escenario actual: 
+y finalmente una proyección de la ocurrencia utilizando el ensamble generado, con las variables bioclimáticas del escenario actual. 
 ```R
 myBiomodProjection <- BIOMOD_Projection(
   modeling.output = myBiomodModelOut,
@@ -98,5 +98,35 @@ myBiomodProjection <- BIOMOD_Projection(
   compress = TRUE,
   build.clamping.mask = FALSE,
   keep.in.memory=FALSE)
+  
+BIOMOD_EnsembleForecasting(projection.output = myBiomodProjection, EM.output = myBiomodEM)
 ```
+Cada proyección, para los modelos por separado y ensamblados es guardada en la carpeta seleccionada como directorio de trabajo, así como los archivos complementarios y los archivos que contienen cada uno de los modelos. 
+
+Por defecto es posible modelar la distribución de una especie (o linaje) a la vez. Es posible aprovechar de mejor manera cada hilo del procesador haciendo uso de la librería `snowfall`, con la que podemos modelar en paralelo la distribución de varias especies. Para ello, es necesario crear una función que a partir de un parámetro `i`, que corresponde a cada especie a modelar, realice el proceso completo.
+
+MyBiomodSF <- function(i){
+#Proceso de modelado
+}
+
+library(snowfall)
+sfInit(parallel=TRUE, cpus=6) #cpus = número de hilos/núcleos disponibles
+
+## Paquetes a utilizar: 
+sfLibrary('biomod2', character.only=TRUE)
+sfLibrary('raster', character.only=TRUE)
+sfLibrary('sf', character.only=TRUE)
+
+## Seleccionar el nombre de las variables y exportar variables a utilizar, para que la función interna pueda "verlas":
+sp.names=c("hybrid","vicugna","mensalis")
+sfExportAll() 
+
+## Ejecutar en paralelo:
+mySFModelsOut <- sfLapply(sp.names, MyBiomodSF)
+
+## stop:
+sfStop(nostop=FALSE)
+
+## **Evaluación del modelo**
+
 
