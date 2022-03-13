@@ -131,4 +131,73 @@ sfStop(nostop=FALSE)
 
 ## **Evaluación del modelo**
 
+Para evaluar el modelo hacemos uso de la función `load` para cargar el modelo a analizar y luego mediante manejo de los datos obtenemos las métricas para cada réplica, modelo o ensamble: 
 
+```R
+library(dplyr)
+#setear el working directory en la carpeta donde estén las carpetas "mensalis", "vicugna" e "hybrid".
+setwd(".../bio")
+
+#se carga el modelo a evaluar
+load('.../bio/vicugna/vicugna.1640727040.models.out')
+#se carga el ensamble a evaluar
+vicugna_en=load('.../bio/vicugna/vicugna.1640727040ensemble.models.out')
+model_en <- get(vicugna_en)
+```
+
+utilizando @ en la variable de cada modelo, se exploran los diferentes ouputs, en este caso, las métricas exactitud:
+```R
+#evaluación de los modelos por separado:
+w=as_tibble(vicugna.1640727040.models.out@models.evaluation@val,rownames='names')
+
+#Maxent:
+test_eval_maxent=w %>% select(starts_with('Testing.data.MAXENT.Phillips.Full')) %>% add_column(stat=rownames(vicugna.1640727040.models.out@models.evaluation@val)) %>% mutate(mean = rowMeans(across(starts_with("Testing")))) %>% select(tail(names(.), 2))
+
+#GBM:
+test_eval_gbm=w %>% select(starts_with('Testing.data.GBM.Full')) %>% add_column(stat=rownames(vicugna.1640727040.models.out@models.evaluation@val)) %>% mutate(mean = rowMeans(across(starts_with("Testing")))) %>% select(tail(names(.), 2))
+
+#Random Forest
+test_eval_rf=w %>% select(starts_with('Testing.data.RF.Full')) %>% add_column(stat=rownames(vicugna.1640727040.models.out@models.evaluation@val)) %>% mutate(mean = rowMeans(across(starts_with("Testing")))) %>% select(tail(names(.), 2))
+
+#evaluación de los ensambles de modelos:
+
+w=as_tibble(get_evaluations(model_en),rownames='names') %>% select(starts_with('vicugna_EMmeanByACCURACY_mergedAlgo_Full'))
+test_eval_ensemble=data.frame(PA1=c(KAPPA=0,TSS=0,ROC=0))
+
+for (i in 1:5){
+  a=w[[i]][,1]
+  test_eval_ensemble[paste('PA',i,sep='')]=a
+}
+
+test_eval_ensemble['mean']=rowMeans(test_eval_ensemble)
+```
+En el primer caso, se genera un data frame con las métricas de evaluación para cada modelo por separado: 
+
+| Modelo | Kappa | TSS | ROC | Accuracy |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| Maxent  | 0.844 | 0.876 | 0.974 | 0.958 |
+| GBM  | 0.879 | 0.941 | 0.992 | 0.970 |
+| Random Forest | 0.976 | 0.989 | 1.0 | 0.993 |
+
+#importancia de variables en modelos por separado
+
+w=as_tibble(vicugna.1640727040.models.out@variables.importances@val,rownames='names')
+
+var_imp_maxent=w %>% select(starts_with('MAXENT.Phillips.Full')) %>% add_column(var=rownames(vicugna.1640727040.models.out@variables.importances@val),.before = 1) %>% mutate(mean = rowMeans(across(starts_with("MAXENT")))) 
+
+var_imp_gbm=w %>% select(starts_with('GBM.Full')) %>% add_column(var=rownames(vicugna.1640727040.models.out@variables.importances@val),.before = 1) %>% mutate(mean = rowMeans(across(starts_with("GBM")))) 
+
+var_imp_rf=w %>% select(starts_with('RF.Full')) %>% add_column(var=rownames(vicugna.1640727040.models.out@variables.importances@val),.before = 1) %>% mutate(mean = rowMeans(across(starts_with("RF")))) 
+
+#importancia de variables en ensambles
+
+w=as_tibble(get_variables_importance(model_en),rownames='names') %>% select(contains(c('vicugna_EMcvByACCURACY_mergedAlgo_Full','names')))
+varimp_ensemble=data.frame(PA1=rep(0,6));rownames(varimp_ensemble)=w$names
+
+for (i in 1:5){
+  o=seq(5*(i-1)+1,i*5)
+  a=mutate(w[o], mean = rowMeans(across(starts_with("rand"))))[6]
+  varimp_ensemble[paste('PA',i,sep='')]=a
+}
+
+varimp_ensemble['mean']=rowMeans(varimp_ensemble)
