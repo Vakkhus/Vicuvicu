@@ -17,7 +17,7 @@ Se utilizaron las [variables bioclimáticas](https://www.worldclim.org/data/bioc
 ## **Construcción del modelo**
 
 Comenzamos importando los paquetes a utilizar:
-```
+```R
 library(biomod2)
 library(raster)
 library(sf)
@@ -26,7 +26,7 @@ library(doParallel)
 ```
 Para luego leer los datos de ocurrencia y crear un stack de las variables bioclimáticas en la zona de estudio: 
 
-```
+```R
 data=read_sf('.../allvicugnas_nov2021.gpkg')              #ocurrencias
 limite=read_sf('.../teow_vicugna1.shp')                   #límite zona estudio 
 lista=list.files('.../bio/',pattern = '.tif')             #lista de archivos con variables bioclímáticas
