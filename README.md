@@ -10,6 +10,17 @@ Se utilizaron las [variables bioclimáticas](https://www.worldclim.org/data/bioc
 
 | Linaje | Variables bioclimáticas seleccionadas |
 | ------------- | ------------- |
-| Mensalis  | bio3, bio7, bio9, bio10, bio13, bio15  |
+| mensalis  | bio3, bio7, bio9, bio10, bio13, bio15  |
 | hybrid  | bio4, bio6, bio7, bio9, bio12, bio15 |
 | vicugna | bio2, bio4, bio7, bio12, bio18, bio19 |
+
+## **Construcción del modelo**
+
+Comenzamos importando los paquetes autilizar:
+```
+library(biomod2)
+library(raster)
+library(sf)
+library(tidyverse)
+library(doParallel)
+```
