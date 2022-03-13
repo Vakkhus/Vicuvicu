@@ -105,6 +105,7 @@ Cada proyección, para los modelos por separado y ensamblados es guardada en la 
 
 Por defecto es posible modelar la distribución de una especie (o linaje) a la vez. Es posible aprovechar de mejor manera cada hilo del procesador haciendo uso de la librería `snowfall`, con la que podemos modelar en paralelo la distribución de varias especies. Para ello, es necesario crear una función que a partir de un parámetro `i`, que corresponde a cada especie a modelar, realice el proceso completo.
 
+```R
 MyBiomodSF <- function(i){
 #Proceso de modelado
 }
@@ -126,6 +127,7 @@ mySFModelsOut <- sfLapply(sp.names, MyBiomodSF)
 
 ## stop:
 sfStop(nostop=FALSE)
+```
 
 ## **Evaluación del modelo**
 
