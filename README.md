@@ -33,3 +33,49 @@ lista=list.files('.../bio/',pattern = '.tif')             #lista de archivos con
 bio=stack(lista)                                          #ráster stack con variables bioclimáticas
 biof=stack(mask(crop(bio,st_zm(limite)),st_zm(limite)))   #recorte de stack a zona de estudio
 ```
+Construímos el modelo de manera independiente para cada linaje `i`, por lo que, para el linaje seleccionado el set de variables bioclimáticas correspondiente: 
+```R
+if (i=="mensalis"){bio=biof[[c("bio3","bio7","bio9","bio10","bio13","bio15")]]}
+if (i=="hybrid"){bio=biof[[c("bio4","bio6","bio7","bio9","bio12","bio15")]]}
+if (i=="vicugna"){bio=biof[[c("bio2","bio4","bio7","bio12","bio18","bio19")]]}
+```
+Luego extraemos de la base de datos, los puntos corresponientes al linaje seleccionado y le damos [formato](https://www.rdocumentation.org/packages/biomod2/versions/3.5.1/topics/BIOMOD_FormatingData) a los datos. `PA.nb.rep` corresponde al número de veces que se seleccionan las pseudoausencias y `PA.nb.absences` el número de puntos de pseudoausencias seleccionadas en cada ocación (`5 * n`, donde n es el número de putnos de ocurrencia).
+
+```R
+myRespName <- i
+    data_resp=as.data.frame(data[which(data$Lineage==myRespName),])[,1:6]
+    data_resp$val=1
+    myResp <- as.numeric(data_resp$val)
+    myRespXY <- data_resp[,c("Longitude","Latitude")]
+    myExpl = bio
+    gc()
+    
+    myBiomodData <- BIOMOD_FormatingData(resp.var = myResp,
+    expl.var = myExpl,
+    resp.xy = myRespXY,
+    resp.name = myRespName,
+    PA.nb.rep=5,
+    PA.nb.absences=5*length(data_resp$val),
+    PA.strategy='random')
+```
+
+Según el linaje seleccionado, se selecciona un porcentaje ds` de datos para fraccionar los datos de entrenamiento, de modo que, para cada linaje el set de datos de entrenamiento sea aproximadamente del mismo tamaño (80 puntos), equivalente al 20% de los datos del linaje con menos observaciones. 
+```R
+if (i=="mensalis"){ds=17}
+if (i=="hybrid"){ds=20}
+if (i=="vicugna"){ds=10}
+```
+
+Luego procedemos a la [construcción del modelo](https://www.rdocumentation.org/packages/biomod2/versions/3.5.1/topics/BIOMOD_Modeling), seleccionando el número de repeticiones `NbRunEval` para cada set de pseudoausencias creado, las métricas de evaluación `models.eval.meth` y los modelos `models` a utilizar: 
+```R
+myBiomodModelOut=BIOMOD_Modeling(
+  data=myBiomodData,
+  models = c("GBM","RF","MAXENT.Phillips"),
+  NbRunEval=20,
+  DataSplit=ds,
+  VarImport = 5,
+  models.eval.meth = c("KAPPA", "TSS", "ROC","ACCURACY"),
+  SaveObj = TRUE,
+  do.full.models = TRUE,
+  )
+```
