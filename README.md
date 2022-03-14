@@ -161,13 +161,26 @@ test_eval_gbm=w %>% select(starts_with('Testing.data.GBM.Full')) %>% add_column(
 #Random Forest
 test_eval_rf=w %>% select(starts_with('Testing.data.RF.Full')) %>% add_column(stat=rownames(vicugna.1640727040.models.out@models.evaluation@val)) %>% mutate(mean = rowMeans(across(starts_with("Testing")))) %>% select(tail(names(.), 2))
 ```
-| vicugna |
-| -------------  |
+#### vicugna
 | Modelo | Kappa | TSS | ROC | Accuracy |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | Maxent  | 0.844 | 0.876 | 0.974 | 0.958 |
 | GBM  | 0.879 | 0.941 | 0.992 | 0.970 |
 | Random Forest | 0.976 | 0.989 | 1.0 | 0.993 |
+
+#### hybrid
+| Modelo | Kappa | TSS | ROC | Accuracy |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| Maxent  |  |  |  |  |
+| GBM  |  | |  |  |
+| Random Forest |  |  | |  |
+
+#### mensalis
+| Modelo | Kappa | TSS | ROC | Accuracy |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| Maxent  |  |  |  |  |
+| GBM  |  | |  |  |
+| Random Forest |  |  | |  |
 
 Mientras que en el segundo caso, la variable almacena las métricas del ensamble de modelos (Maxent, RF, GBM) para cada réplica de muestreo de pseudoausencias `PA`. Luego, se calcula el promedio de los indicadores: 
 
@@ -185,7 +198,7 @@ for (i in 1:5){
 test_eval_ensemble['mean']=rowMeans(test_eval_ensemble)
 ```
 
-| eval | mean vicugna |  mean hybrid | mean mensalis  | 
+| eval | vicugna |  hybrid | mensalis  | 
 | ------------- | ------------- | ------------- | ------------- |
 |KAPPA | 0.9386| | |
 |TSS   | 0.9608| | |
@@ -206,7 +219,35 @@ var_imp_gbm=w %>% select(starts_with('GBM.Full')) %>% add_column(var=rownames(vi
 
 var_imp_rf=w %>% select(starts_with('RF.Full')) %>% add_column(var=rownames(vicugna.1640727040.models.out@variables.importances@val),.before = 1) %>% mutate(mean = rowMeans(across(starts_with("RF")))) 
 ```
-var
+#### vicugna
+| var | Maxent |  GBM | Random Forest | 
+| ------------- | ------------- | ------------- | ------------- |
+|bio2  | | | |
+|bio4  | | | |
+|bio7  | | | |
+|bio12 | | | |
+|bio18 | | | |
+|bio19 | | | |
+
+#### hybrid
+| var | Maxent |  GBM | Random Forest | 
+| ------------- | ------------- | ------------- | ------------- |
+|bio4 | | | |
+|bio6  | | | |
+|bio7  | | | |
+|bio9 | | | |
+|bio12 | | | |
+|bio15 | | | |
+
+#### mensalis
+| var | Maxent |  GBM | Random Forest | 
+| ------------- | ------------- | ------------- | ------------- |
+|bio3  | | | |
+|bio7  | | | |
+|bio9  | | | |
+|bio10 | | | |
+|bio13 | | | |
+|bio15 | | | |
 
 #importancia de variables en ensambles
 
