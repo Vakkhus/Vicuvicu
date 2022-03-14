@@ -5,7 +5,7 @@ biomod2 ofrece la posibilidad de ejecutar 10 técnicas de modelado de última ge
 ## **Variable respuesta**
 La variable respuesta está conformada a 1657 puntos de presencia de la especie, donde 792 corresponden al linaje _vicugna_, 465 al linaje _mensalis_ y 400 al linaje híbrido, obtenidos de .... Además, un set de  `5 * n` puntos de background, donde n es el número de puntos utilizados para la construcción de la instancia del modelo, es generado en cada instancia y distribuídos aleatóreamente dentro de la zona de estudio.
 
-## **Variable predictoras**
+## **Variables predictoras**
 Se utilizaron las [variables bioclimáticas](https://www.worldclim.org/data/bioclim.html) disponibles en [CHELSA](https://chelsa-climate.org/) como variables predictoras y posteriormente, mediante un [análisis de componentes principales (PCA)](https://www.sciencedirect.com/science/article/abs/pii/S0167947304002014?via%3Dihub) se determinó el set de variables más relevante para cada uno de los linajes. 
 
 | Linaje | Variables bioclimáticas seleccionadas |
