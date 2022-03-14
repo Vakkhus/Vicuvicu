@@ -131,7 +131,7 @@ sfStop(nostop=FALSE)
 
 ## **Evaluación del modelo**
 
-#### **Exactitud**
+## **Exactitud**
 Para evaluar el modelo hacemos uso de la función `load` para cargar el modelo a analizar y luego mediante manejo de los datos obtenemos las métricas para cada réplica, modelo o ensamble: 
 
 ```R
@@ -205,7 +205,7 @@ test_eval_ensemble['mean']=rowMeans(test_eval_ensemble)
 |TSS   | 0.9608|0.5478 |0.7734 |
 |ROC   | 0.9980|0.8062 |0.8820 |
 
-#### **Importancia de variables**
+## **Importancia de variables**
 
 De manera similar, podemos calcular la importancia de las variables para los modelos por separado, promediando las importancias de los modelos `Full`, o para el ensamble de modelos, promediando las importancia del mensamble para cada `PA`:
 
@@ -280,9 +280,9 @@ varimp_ensemble['mean']=rowMeans(varimp_ensemble)
 |bio18 |0.1131 |-      |-      |
 |bio19 |0.0737 |-      |-      |
 
-#### Curvas de respuesta
+## Curvas de respuesta
 
-Para obtener las curvas de respuesta por modelo: 
+Para obtener las curvas de respuesta por modelo (cada línea representa un modelo `Full` y cada color un algoritmo): 
 
 ```R
 setwd(".../bio")
@@ -307,7 +307,7 @@ myRespPlot2D <-
 ![enter image description here](https://github.com/Vakkhus/Vicuvicu/blob/main/Plots/Response_model_mensalis.png?raw=true)
 
 
-Para obtener las curvas de respuesta por ensamble: 
+Para obtener las curvas de respuesta por ensamble (cada línea y color representa una réplica de `PA` para el ensamble): 
 ```R
 #se carga el modelo a evaluar
 setwd("S:/UACh/vicuñas/chelsa_historico/bio")
@@ -328,3 +328,9 @@ BIOMOD_LoadModels(my_model, models = c('PA1','PA2','PA3','PA4','PA5'))
 #se grafican las curvas de respuesta
 myRespPlot2D <- response.plot2(models = model, Data = get_formal_data(my_model2, 'expl.var'),show.variables = c("bio2",  "bio4",  "bio7",  "bio12", "bio18", "bio19"),fixed.var.metric = 'mean', col = c('#d9ed92', "#99d98c","#52b69a","#1a759f","#184e77"),legend = TRUE, save.file = 'pdf')
 ```
+#### vicugna
+![enter image description here](https://github.com/Vakkhus/Vicuvicu/blob/main/Plots/Response_ensemble_vicugna.png?raw=true)
+#### hybrid
+![enter image description here](https://github.com/Vakkhus/Vicuvicu/blob/main/Plots/Response_ensemble_hybrid.png?raw=true)
+#### mensalis
+![enter image description here](https://github.com/Vakkhus/Vicuvicu/blob/main/Plots/Response_ensemble_mensalis.png?raw=true)
