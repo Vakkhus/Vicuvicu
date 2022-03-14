@@ -145,8 +145,8 @@ vicugna_en=load('.../bio/vicugna/vicugna.1640727040ensemble.models.out')
 model_en <- get(vicugna_en)
 ```
 
-utilizando @ en la variable de cada modelo, se exploran los diferentes ouputs, en este caso, las métricas exactitud:
-```R
+utilizando @ en la variable de cada modelo, se exploran los diferentes ouputs, en este caso, las métricas exactitud. En el primer caso, la variable almacena los resultados de cada corrida o `run` para cada réplica de muestreo de pseudoausencias `PA`, además de un modelo `Full` que ensambla todas las réplicas para un mismo `PA`. Luego, se genera un data frame con las métricas de evaluación para cada modelo `Full` por separado, y se promedian: 
+``R
 #evaluación de los modelos por separado:
 w=as_tibble(vicugna.1640727040.models.out@models.evaluation@val,rownames='names')
 
@@ -158,7 +158,17 @@ test_eval_gbm=w %>% select(starts_with('Testing.data.GBM.Full')) %>% add_column(
 
 #Random Forest
 test_eval_rf=w %>% select(starts_with('Testing.data.RF.Full')) %>% add_column(stat=rownames(vicugna.1640727040.models.out@models.evaluation@val)) %>% mutate(mean = rowMeans(across(starts_with("Testing")))) %>% select(tail(names(.), 2))
+```
 
+| Modelo | Kappa | TSS | ROC | Accuracy |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| Maxent  | 0.844 | 0.876 | 0.974 | 0.958 |
+| GBM  | 0.879 | 0.941 | 0.992 | 0.970 |
+| Random Forest | 0.976 | 0.989 | 1.0 | 0.993 |
+```
+Mientras que en el segundo caso, la variable almacena las métricas del ensamble de modelos (Maxent, RF, GBM) para cada réplica de muestreo de pseudoausencias `PA`. Luego, se calcula el promedio de los indicadores: 
+
+```R
 #evaluación de los ensambles de modelos:
 
 w=as_tibble(get_evaluations(model_en),rownames='names') %>% select(starts_with('vicugna_EMmeanByACCURACY_mergedAlgo_Full'))
@@ -171,13 +181,12 @@ for (i in 1:5){
 
 test_eval_ensemble['mean']=rowMeans(test_eval_ensemble)
 ```
-En el primer caso, se genera un data frame con las métricas de evaluación para cada modelo por separado: 
+| Modelo | PA1 |  PA2  | PA3  | PA4 |  PA5 | mean |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+|KAPPA |0.934| 0.941| 0.937| 0.946| 0.935| 0.9386|
+|TSS   |0.962| 0.962| 0.960| 0.963| 0.957| 0.9608|
+|ROC   |0.998| 0.998| 0.998| 0.998| 0.998| 0.9980|
 
-| Modelo | Kappa | TSS | ROC | Accuracy |
-| ------------- | ------------- | ------------- | ------------- | ------------- |
-| Maxent  | 0.844 | 0.876 | 0.974 | 0.958 |
-| GBM  | 0.879 | 0.941 | 0.992 | 0.970 |
-| Random Forest | 0.976 | 0.989 | 1.0 | 0.993 |
 
 #importancia de variables en modelos por separado
 
