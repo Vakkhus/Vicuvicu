@@ -178,9 +178,10 @@ test_eval_rf=w %>% select(starts_with('Testing.data.RF.Full')) %>% add_column(st
 #### mensalis
 | Modelo | Kappa | TSS | ROC | Accuracy |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
-| Maxent  |  |  |  |  |
-| GBM  |  | |  |  |
-| Random Forest |  |  | |  |
+| Maxent  | 0.898 | 0.852 | 0.936 | 0.973  |
+| GBM  | 0.919|0.952  |0.997  |0.977 | 
+| Random Forest | 0.988  | 0.994 |1.0 | 0.996 |
+
 
 Mientras que en el segundo caso, la variable almacena las métricas del ensamble de modelos (Maxent, RF, GBM) para cada réplica de muestreo de pseudoausencias `PA`. Luego, se calcula el promedio de los indicadores: 
 
@@ -200,9 +201,9 @@ test_eval_ensemble['mean']=rowMeans(test_eval_ensemble)
 
 | eval | vicugna |  hybrid | mensalis  | 
 | ------------- | ------------- | ------------- | ------------- |
-|KAPPA | 0.9386| | |
-|TSS   | 0.9608| | |
-|ROC   | 0.9980| | |
+|KAPPA | 0.9386| |0.7810 |
+|TSS   | 0.9608| |0.7734 |
+|ROC   | 0.9980| |0.8820 |
 
 #### **Importancia de variables**
 
@@ -222,12 +223,12 @@ var_imp_rf=w %>% select(starts_with('RF.Full')) %>% add_column(var=rownames(vicu
 #### vicugna
 | var | Maxent |  GBM | Random Forest | 
 | ------------- | ------------- | ------------- | ------------- |
-|bio2  |0.4276 |0.5216  |0.2750  |
-|bio4  |0.2208 |0.1098  |0.1536  |
-|bio7  |0.1050 |0.0364  |0.1254  |
-|bio12 |0.5568 |0.2744  |0.3468  |
-|bio18 |0.0942 |0.0032  |0.0528  |
-|bio19 |0.0546 |0.0014  |0.0332  |
+|bio2  |0.4276 |0.5216  |0.2750|
+|bio4  |0.2208 |0.1098  |0.1536|
+|bio7  |0.1050 |0.0364  |0.1254|
+|bio12 |0.5568 |0.2744  |0.3468|
+|bio18 |0.0942 |0.0032  |0.0528|
+|bio19 |0.0546 |0.0014  |0.0332|
 
 
 #### hybrid
@@ -243,13 +244,14 @@ var_imp_rf=w %>% select(starts_with('RF.Full')) %>% add_column(var=rownames(vicu
 #### mensalis
 | var | Maxent |  GBM | Random Forest | 
 | ------------- | ------------- | ------------- | ------------- |
-|bio3  | | | |
-|bio7  | | | |
-|bio9  | | | |
-|bio10 | | | |
-|bio13 | | | |
-|bio15 | | | |
+|bio3  |0.2006|0.0392|0.1460|
+|bio7  |0.3048|0.1732|0.1120|
+|bio9  |0.0228|0.0014|0.0600|
+|bio10 |0.1780|0.5674|0.1080|
+|bio13 |0.1328|0.0856|0.0494|
+|bio15 |0.0804|0.0020|0.0688|
 
+```R
 #importancia de variables en ensambles
 
 w=as_tibble(get_variables_importance(model_en),rownames='names') %>% select(contains(c('vicugna_EMcvByACCURACY_mergedAlgo_Full','names')))
@@ -262,3 +264,33 @@ for (i in 1:5){
 }
 
 varimp_ensemble['mean']=rowMeans(varimp_ensemble)
+```
+| var | vicugna|  hybrid | mensalis | 
+| ------------- | ------------- | ------------- | ------------- |
+|bio2  |0.4179 | | |
+|bio4  |0.1901 | | |
+|bio7  |0.2251 | | |
+|bio12 |0.3482 | | |
+|bio18 |0.1131 | | |
+|bio19 |0.0737 | | |
+
+#### Curvas de respuesta
+
+Para obtener las curvas de respuesta por modelo: 
+
+```R
+setwd(".../bio")
+#se carga el modelo a evaluar
+load('.../bio/vicugna/vicugna.1640727040.models.out')
+
+vicugna_mod=load('.../bio/vicugna/vicugna.1640727040.models.out')
+my_model <- get(vicugna_mod)
+
+model=BIOMOD_LoadModels(my_model, models = c('GBM','RF','MAXENT.Phillips'))
+model=model[seq(21,315,21)]#se muestrans los modelos "full"
+
+myRespPlot2D <- 
+  response.plot2(models = model, Data = get_formal_data(my_model, 'expl.var'),show.variables = c("bio2",  "bio4",  "bio7",  "bio12", "bio18", "bio19"),fixed.var.metric = 'mean',
+    col = c(rep("blue",5), rep("red",5),rep("green",5)),legend = TRUE)
+```
+Para obtener las curvas de respuesta por ensamble: 
