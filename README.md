@@ -162,6 +162,7 @@ test_eval_gbm=w %>% select(starts_with('Testing.data.GBM.Full')) %>% add_column(
 test_eval_rf=w %>% select(starts_with('Testing.data.RF.Full')) %>% add_column(stat=rownames(vicugna.1640727040.models.out@models.evaluation@val)) %>% mutate(mean = rowMeans(across(starts_with("Testing")))) %>% select(tail(names(.), 2))
 ```
 | vicugna |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
 | Modelo | Kappa | TSS | ROC | Accuracy |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | Maxent  | 0.844 | 0.876 | 0.974 | 0.958 |
