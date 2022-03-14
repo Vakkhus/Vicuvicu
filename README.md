@@ -171,9 +171,9 @@ test_eval_rf=w %>% select(starts_with('Testing.data.RF.Full')) %>% add_column(st
 #### hybrid
 | Modelo | Kappa | TSS | ROC | Accuracy |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
-| Maxent  |  |  |  |  |
-| GBM  |  | |  |  |
-| Random Forest |  |  | |  |
+| Maxent  | 0.940 | 0.919 |0.967  |0.984  |
+| GBM  | 0.972 |0.984 | 0.999 | 0.992 |
+| Random Forest |0.987  |0.995  |1.0 |0.996  |
 
 #### mensalis
 | Modelo | Kappa | TSS | ROC | Accuracy |
@@ -201,9 +201,9 @@ test_eval_ensemble['mean']=rowMeans(test_eval_ensemble)
 
 | eval | vicugna |  hybrid | mensalis  | 
 | ------------- | ------------- | ------------- | ------------- |
-|KAPPA | 0.9386| |0.7810 |
-|TSS   | 0.9608| |0.7734 |
-|ROC   | 0.9980| |0.8820 |
+|KAPPA | 0.9386|0.5432 |0.7810 |
+|TSS   | 0.9608|0.5478 |0.7734 |
+|ROC   | 0.9980|0.8062 |0.8820 |
 
 #### **Importancia de variables**
 
@@ -234,12 +234,12 @@ var_imp_rf=w %>% select(starts_with('RF.Full')) %>% add_column(var=rownames(vicu
 #### hybrid
 | var | Maxent |  GBM | Random Forest | 
 | ------------- | ------------- | ------------- | ------------- |
-|bio4 | | | |
-|bio6  | | | |
-|bio7  | | | |
-|bio9 | | | |
-|bio12 | | | |
-|bio15 | | | |
+|bio4 |0.0850 |0.0166 |0.0632 |
+|bio6  |0.1832 |0.0112|0.0610 |
+|bio7  |0.0876 |0.0168 |0.0474 |
+|bio9 |0.2214 |0.1492 |0.0418 |
+|bio12 |0.1502 |0.0068 |0.0576 |
+|bio15 |0.1096 |0.6150 |0.1840 |
 
 #### mensalis
 | var | Maxent |  GBM | Random Forest | 
@@ -267,18 +267,18 @@ varimp_ensemble['mean']=rowMeans(varimp_ensemble)
 ```
 | var | vicugna|  hybrid | mensalis | 
 | ------------- | ------------- | ------------- | ------------- |
-|bio2  |0.4179 | |- |
-|bio3  |-      | | 0.2076|
-|bio4  |0.1901 | |- |
-|bio6  |-      | |- |
-|bio7  |0.2251 | |0.2194 |
-|bio9  |-      | |0.1367 |
-|bio10 |-      | |0.4474 |
-|bio12 |0.3482 | |- |
-|bio13  |-     | |0.0993 |
-|bio15  |-     | |0.0895 |
-|bio18 |0.1131 | |- |
-|bio19 |0.0737 | |-|
+|bio2  |0.4179 |-      |-      |
+|bio3  |-      |-      | 0.2076|
+|bio4  |0.1901 |0.1281 |-      |
+|bio6  |-      |0.2368 |-      |
+|bio7  |0.2251 |0.2089 |0.2194 |
+|bio9  |-      |0.1395 |0.1367 |
+|bio10 |-      |-      |0.4474 |
+|bio12 |0.3482 |0.0722 |-      |
+|bio13  |-     |-      |0.0993 |
+|bio15  |-     |0.3538 |0.0895 |
+|bio18 |0.1131 |-      |-      |
+|bio19 |0.0737 |-      |-      |
 
 #### Curvas de respuesta
 
@@ -300,3 +300,23 @@ myRespPlot2D <-
     col = c(rep("blue",5), rep("red",5),rep("green",5)),legend = TRUE)
 ```
 Para obtener las curvas de respuesta por ensamble: 
+```R
+#se carga el modelo a evaluar
+setwd("S:/UACh/vicuñas/chelsa_historico/bio")
+load('S:/UACh/vicuñas/chelsa_historico/bio/vicugna/vicugna.1640727040ensemble.models.out')
+
+#se carga el archivo con los ensambles
+vicugna_mod=load('S:/UACh/vicuñas/chelsa_historico/bio/vicugna/vicugna.1640727040ensemble.models.out')
+my_model <- get(vicugna_mod)
+#se carga el archivo con los modelos por separado (solo se usa para obtener los valores de las variables)
+vicugna_mod2=load('S:/UACh/vicuñas/chelsa_historico/bio/vicugna/vicugna.1640727040.models.out')
+my_model2 <- get(vicugna_mod2)
+
+#se seleccionan los ensambles "full" (combinación de corridas), promediados por Accuracy
+model=c("vicugna_EMmeanByACCURACY_mergedAlgo_Full_PA1","vicugna_EMmeanByACCURACY_mergedAlgo_Full_PA2","vicugna_EMmeanByACCURACY_mergedAlgo_Full_PA3","vicugna_EMmeanByACCURACY_mergedAlgo_Full_PA4","vicugna_EMmeanByACCURACY_mergedAlgo_Full_PA5")
+#para ver todos los ensambles disponibles: 
+BIOMOD_LoadModels(my_model, models = c('PA1','PA2','PA3','PA4','PA5'))
+
+#se grafican las curvas de respuesta
+myRespPlot2D <- response.plot2(models = model, Data = get_formal_data(my_model2, 'expl.var'),show.variables = c("bio2",  "bio4",  "bio7",  "bio12", "bio18", "bio19"),fixed.var.metric = 'mean', col = c('#d9ed92', "#99d98c","#52b69a","#1a759f","#184e77"),legend = TRUE, save.file = 'pdf')
+```
