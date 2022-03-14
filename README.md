@@ -299,6 +299,14 @@ myRespPlot2D <-
   response.plot2(models = model, Data = get_formal_data(my_model, 'expl.var'),show.variables = c("bio2",  "bio4",  "bio7",  "bio12", "bio18", "bio19"),fixed.var.metric = 'mean',
     col = c(rep("blue",5), rep("red",5),rep("green",5)),legend = TRUE)
 ```
+#### vicugna
+![enter image description here](https://github.com/Vakkhus/Vicuvicu/Plots/Response_model_vicugna?raw=true)
+#### hybrid
+![enter image description here](https://github.com/Vakkhus/Vicuvicu/Plots/Response_model_hybrid?raw=true)
+#### mensalis
+![enter image description here](https://github.com/Vakkhus/Vicuvicu/Plots/Response_model_mensalis?raw=true)
+
+
 Para obtener las curvas de respuesta por ensamble: 
 ```R
 #se carga el modelo a evaluar
