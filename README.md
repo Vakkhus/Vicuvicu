@@ -131,6 +131,7 @@ sfStop(nostop=FALSE)
 
 ## **Evaluación del modelo**
 
+#### **Exactitud**
 Para evaluar el modelo hacemos uso de la función `load` para cargar el modelo a analizar y luego mediante manejo de los datos obtenemos las métricas para cada réplica, modelo o ensamble: 
 
 ```R
@@ -146,7 +147,8 @@ model_en <- get(vicugna_en)
 ```
 
 utilizando @ en la variable de cada modelo, se exploran los diferentes ouputs, en este caso, las métricas exactitud. En el primer caso, la variable almacena los resultados de cada corrida o `run` para cada réplica de muestreo de pseudoausencias `PA`, además de un modelo `Full` que ensambla todas las réplicas para un mismo `PA`. Luego, se genera un data frame con las métricas de evaluación para cada modelo `Full` por separado, y se promedian: 
-``R
+
+```R
 #evaluación de los modelos por separado:
 w=as_tibble(vicugna.1640727040.models.out@models.evaluation@val,rownames='names')
 
@@ -165,7 +167,7 @@ test_eval_rf=w %>% select(starts_with('Testing.data.RF.Full')) %>% add_column(st
 | Maxent  | 0.844 | 0.876 | 0.974 | 0.958 |
 | GBM  | 0.879 | 0.941 | 0.992 | 0.970 |
 | Random Forest | 0.976 | 0.989 | 1.0 | 0.993 |
-```
+
 Mientras que en el segundo caso, la variable almacena las métricas del ensamble de modelos (Maxent, RF, GBM) para cada réplica de muestreo de pseudoausencias `PA`. Luego, se calcula el promedio de los indicadores: 
 
 ```R
@@ -181,6 +183,7 @@ for (i in 1:5){
 
 test_eval_ensemble['mean']=rowMeans(test_eval_ensemble)
 ```
+
 | eval | PA1 |  PA2  | PA3  | PA4 |  PA5 | mean |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
 |KAPPA |0.934| 0.941| 0.937| 0.946| 0.935| 0.9386|
