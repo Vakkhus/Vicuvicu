@@ -14,6 +14,9 @@ Se utilizaron las [variables bioclimáticas](https://www.worldclim.org/data/bioc
 | hybrid  | bio4, bio6, bio7, bio9, bio12, bio15 |
 | vicugna | bio2, bio4, bio7, bio12, bio18, bio19 |
 
+## **Área de estudio**
+
+
 ## **Construcción del modelo**
 
 Comenzamos importando los paquetes a utilizar:
