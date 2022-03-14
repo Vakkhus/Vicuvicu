@@ -161,7 +161,7 @@ test_eval_gbm=w %>% select(starts_with('Testing.data.GBM.Full')) %>% add_column(
 #Random Forest
 test_eval_rf=w %>% select(starts_with('Testing.data.RF.Full')) %>% add_column(stat=rownames(vicugna.1640727040.models.out@models.evaluation@val)) %>% mutate(mean = rowMeans(across(starts_with("Testing")))) %>% select(tail(names(.), 2))
 ```
-
+| vicugna |
 | Modelo | Kappa | TSS | ROC | Accuracy |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | Maxent  | 0.844 | 0.876 | 0.974 | 0.958 |
@@ -184,13 +184,17 @@ for (i in 1:5){
 test_eval_ensemble['mean']=rowMeans(test_eval_ensemble)
 ```
 
-| eval | PA1 |  PA2  | PA3  | PA4 |  PA5 | mean |
-| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
-|KAPPA |0.934| 0.941| 0.937| 0.946| 0.935| 0.9386|
-|TSS   |0.962| 0.962| 0.960| 0.963| 0.957| 0.9608|
-|ROC   |0.998| 0.998| 0.998| 0.998| 0.998| 0.9980|
+| eval | mean vicugna |  mean hybrid | mean mensalis  | 
+| ------------- | ------------- | ------------- | ------------- |
+|KAPPA | 0.9386| | |
+|TSS   | 0.9608| | |
+|ROC   | 0.9980| | |
 
+#### **Importancia de variables**
 
+De manera similar, podemos calcular la importancia de las variables para los modelos por separado, promediando las importancias de los modelos `Full`, o para el ensamble de modelos, promediando las importancia del mensamble para cada `PA`:
+
+```R
 #importancia de variables en modelos por separado
 
 w=as_tibble(vicugna.1640727040.models.out@variables.importances@val,rownames='names')
@@ -200,6 +204,8 @@ var_imp_maxent=w %>% select(starts_with('MAXENT.Phillips.Full')) %>% add_column(
 var_imp_gbm=w %>% select(starts_with('GBM.Full')) %>% add_column(var=rownames(vicugna.1640727040.models.out@variables.importances@val),.before = 1) %>% mutate(mean = rowMeans(across(starts_with("GBM")))) 
 
 var_imp_rf=w %>% select(starts_with('RF.Full')) %>% add_column(var=rownames(vicugna.1640727040.models.out@variables.importances@val),.before = 1) %>% mutate(mean = rowMeans(across(starts_with("RF")))) 
+```
+var
 
 #importancia de variables en ensambles
 
