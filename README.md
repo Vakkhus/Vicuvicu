@@ -222,12 +222,13 @@ var_imp_rf=w %>% select(starts_with('RF.Full')) %>% add_column(var=rownames(vicu
 #### vicugna
 | var | Maxent |  GBM | Random Forest | 
 | ------------- | ------------- | ------------- | ------------- |
-|bio2  | | | |
-|bio4  | | | |
-|bio7  | | | |
-|bio12 | | | |
-|bio18 | | | |
-|bio19 | | | |
+|bio2  |0.4276 |0.5216  |0.2750  |
+|bio4  |0.2208 |0.1098  |0.1536  |
+|bio7  |0.1050 |0.0364  |0.1254  |
+|bio12 |0.5568 |0.2744  |0.3468  |
+|bio18 |0.0942 |0.0032  |0.0528  |
+|bio19 |0.0546 |0.0014  |0.0332  |
+
 
 #### hybrid
 | var | Maxent |  GBM | Random Forest | 
