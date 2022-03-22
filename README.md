@@ -345,5 +345,9 @@ A raíz de la poca respuesta de las variables en las curvas, se construyó un mo
 
 Las 6 variables más relevantes para cada linaje son:
 
+Sin embargo, aún con las variables más importantes identificadas por el modelo, no hay cambios importantes en las curvas de respuesta, sobre todo para MAXENT.
+
+Si graficamos el modelo anterior para el linaje mensalis, pero esta vez para cada PA, cada modelo y cada réplica, el restulado es el siguiente: 
+
 <img width="569" alt="image" src="https://user-images.githubusercontent.com/43461660/159518307-5964844c-a812-478d-b330-00b6c72390de.png">
 
