@@ -339,6 +339,21 @@ myRespPlot2D <- response.plot2(models = model, Data = get_formal_data(my_model2,
 ![enter image description here](https://github.com/Vakkhus/Vicuvicu/blob/main/Plots/Response_ensemble_mensalis.png?raw=true)
 
 
+## **Proyecciones**
+
+#### mensalis 
+<img width="382" alt="image" src="https://user-images.githubusercontent.com/43461660/159535805-c311ac4d-dc35-4446-8b36-e12a6fc2be79.png">
+
+#### vicugna 
+<img width="385" alt="image" src="https://user-images.githubusercontent.com/43461660/159535848-6c69a51b-70f6-43c7-baa5-deb8a6b18b07.png">
+
+#### hybrid
+<img width="381" alt="image" src="https://user-images.githubusercontent.com/43461660/159535881-543b8e87-1a15-48b7-9660-127745f49c95.png">
+
+#### all lineages
+<img width="392" alt="image" src="https://user-images.githubusercontent.com/43461660/159535938-bb0b06b8-f6d9-4bbb-99d1-e27b6945ef79.png">
+
+
 # **Modelos con todas las variables bioclimáticas**
 
 A raíz de la poca respuesta de la probabilidad de ocurrencia a las variables en las curvas, se construyó un modelo nuevo para cada linaje y que utiliza todas las variables bioclimáticas, para verificar si se están utilizando aquellas variables que efectivamente son relevantes para la especie. 
