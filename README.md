@@ -378,6 +378,7 @@ y las 6 variables más importantes son:
 | bio15          | bio8          | \| | bio15      | bio17       | \| | bio19       | bio7         |
 
 Sin embargo, aún con las variables más importantes identificadas por el modelo, no hay cambios importantes en las curvas de respuesta, sobre todo para MAXENT.
+
 <img width="568" alt="image" src="https://user-images.githubusercontent.com/43461660/159533211-38e2ca32-df67-40d2-93fe-6ff83bc4b235.png">
 
 Si graficamos el modelo anterior para el linaje mensalis, pero esta vez para cada PA, cada modelo y cada réplica, el restulado es el siguiente: 
