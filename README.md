@@ -341,7 +341,7 @@ myRespPlot2D <- response.plot2(models = model, Data = get_formal_data(my_model2,
 
 # **Modelos con todas las variables bioclimáticas**
 
-A raíz de la poca respuesta de las variables en las curvas, se construyó un modelo nuevo para cada linaje y que utiliza todas las variables bioclimáticas, para verificar si se están utilizando aquellas variables que efectivamente son relevantes para la especie. 
+A raíz de la poca respuesta de la probabilidad de ocurrencia a las variables en las curvas, se construyó un modelo nuevo para cada linaje y que utiliza todas las variables bioclimáticas, para verificar si se están utilizando aquellas variables que efectivamente son relevantes para la especie. 
 
 Las 6 variables más relevantes para cada linaje son:
 
