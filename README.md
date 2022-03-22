@@ -342,16 +342,16 @@ myRespPlot2D <- response.plot2(models = model, Data = get_formal_data(my_model2,
 ## **Proyecciones**
 
 #### mensalis 
-<img width="382" alt="image" src="https://user-images.githubusercontent.com/43461660/159535805-c311ac4d-dc35-4446-8b36-e12a6fc2be79.png">
+<img width="500" alt="image" src="https://user-images.githubusercontent.com/43461660/159535805-c311ac4d-dc35-4446-8b36-e12a6fc2be79.png">
 
 #### vicugna 
-<img width="385" alt="image" src="https://user-images.githubusercontent.com/43461660/159535848-6c69a51b-70f6-43c7-baa5-deb8a6b18b07.png">
+<img width="500" alt="image" src="https://user-images.githubusercontent.com/43461660/159535848-6c69a51b-70f6-43c7-baa5-deb8a6b18b07.png">
 
 #### hybrid
-<img width="381" alt="image" src="https://user-images.githubusercontent.com/43461660/159535881-543b8e87-1a15-48b7-9660-127745f49c95.png">
+<img width="500" alt="image" src="https://user-images.githubusercontent.com/43461660/159535881-543b8e87-1a15-48b7-9660-127745f49c95.png">
 
 #### all lineages
-<img width="392" alt="image" src="https://user-images.githubusercontent.com/43461660/159535938-bb0b06b8-f6d9-4bbb-99d1-e27b6945ef79.png">
+<img width="500" alt="image" src="https://user-images.githubusercontent.com/43461660/159535938-bb0b06b8-f6d9-4bbb-99d1-e27b6945ef79.png">
 
 
 # **Modelos con todas las variables bioclimáticas**
