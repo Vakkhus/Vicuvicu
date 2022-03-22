@@ -343,9 +343,32 @@ myRespPlot2D <- response.plot2(models = model, Data = get_formal_data(my_model2,
 
 A raíz de la poca respuesta de la probabilidad de ocurrencia a las variables en las curvas, se construyó un modelo nuevo para cada linaje y que utiliza todas las variables bioclimáticas, para verificar si se están utilizando aquellas variables que efectivamente son relevantes para la especie. 
 
-Las 6 variables más relevantes para cada linaje son:
+Las importancia de las variables para cada linaje es:
+
+|       | vicugna     | mensalis    | hybrid      |
+|-------|-------------|-------------|-------------|
+| bio2  | *0.28074092 | 0.12229212  | *0.16986900 |
+| bio6  | *0.22781432 | *0.17068072 | *0.14219548 |
+| bio11 | *0.20332840 | 0.15484432  | 0.06883244  |
+| bio1  | *0.17025972 | *0.17939124 | 0.04697016  |
+| bio9  | *0.16242868 | *0.15700300 | 0.05752312  |
+| bio7  | *0.15459416 | 0.09498436  | 0.04377308  |
+| bio12 | 0.13059460  | 0.03437792  | *0.09249912 |
+| bio16 | 0.11143008  | 0.05764960  | 0.04409472  |
+| bio10 | 0.11005576  | *0.26365488 | 0.04860852  |
+| bio4  | 0.10580292  | 0.09568504  | 0.05743544  |
+| bio3  | 0.08931480  | 0.08082560  | 0.04712856  |
+| bio5  | 0.06929360  | *0.18473520 | 0.04315840  |
+| bio8  | 0.05987564  | *0.16932212 | 0.02510676  |
+| bio13 | 0.04628144  | 0.05183364  | 0.04068596  |
+| bio15 | 0.04247180  | 0.02703372  | *0.21201004 |
+| bio18 | 0.04007872  | 0.05483144  | 0.02956224  |
+| bio19 | 0.03891472  | 0.02570144  | *0.09635752 |
+| bio17 | 0.03294220  | 0.02247824  | *0.11271572 |
+| bio14 | 0.02865220  | 0.01588932  | 0.02812072  |
 
 Sin embargo, aún con las variables más importantes identificadas por el modelo, no hay cambios importantes en las curvas de respuesta, sobre todo para MAXENT.
+<img width="568" alt="image" src="https://user-images.githubusercontent.com/43461660/159533211-38e2ca32-df67-40d2-93fe-6ff83bc4b235.png">
 
 Si graficamos el modelo anterior para el linaje mensalis, pero esta vez para cada PA, cada modelo y cada réplica, el restulado es el siguiente: 
 
