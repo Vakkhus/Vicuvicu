@@ -367,6 +367,16 @@ Las importancia de las variables para cada linaje es:
 | bio17 | 0.03294220  | 0.02247824  | *0.11271572 |
 | bio14 | 0.02865220  | 0.01588932  | 0.02812072  |
 
+y las 6 variables más importantes son: 
+| mensalis   PCA | mensalis FULL | \| | hybrid PCA | hybrid FULL | \| | vicugna PCA | vicugna FULL |
+|----------------|---------------|----|------------|-------------|----|-------------|--------------|
+| bio3           | bio1          | \| | bio4       | bio2        | \| | bio2        | bio2         |
+| bio7           | bio6          | \| | bio6       | bio6        | \| | bio4        | bio6         |
+| bio9           | bio9          | \| | bio7       | bio12       | \| | bio7        | bio11        |
+| bio10          | bio10         | \| | bio9       | bio15       | \| | bio12       | bio1         |
+| bio13          | bio5          | \| | bio12      | bio19       | \| | bio18       | bio9         |
+| bio15          | bio8          | \| | bio15      | bio17       | \| | bio19       | bio7         |
+
 Sin embargo, aún con las variables más importantes identificadas por el modelo, no hay cambios importantes en las curvas de respuesta, sobre todo para MAXENT.
 <img width="568" alt="image" src="https://user-images.githubusercontent.com/43461660/159533211-38e2ca32-df67-40d2-93fe-6ff83bc4b235.png">
 
