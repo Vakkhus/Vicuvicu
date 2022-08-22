@@ -407,7 +407,6 @@ A partir de un análisis de componentes principales se estableció un set de var
 La importancia media de cada una de las variables entre los 5 `PA` se detalla a continuación:
 
 |       | vicugna     | mensalis    | hybrid      |all lineages     |
-
 |-------|-------------|-------------|-------------|-------------|
 | bio1  |0.229|0.190|0.058 |0.277|
 | bio2  |0.283|0.170|0.180|0.255|
