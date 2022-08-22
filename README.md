@@ -422,3 +422,30 @@ La importancia media de cada una de las variables entre los 5 `PA` se detalla a 
 | bio19 |0.055|0.100|0.092|0.092|
 
 
+![importance_bar](https://user-images.githubusercontent.com/43461660/185834385-7c1ad769-8ca2-45b9-9049-32e3de998357.png)
+
+## Curvas de respuesta
+
+#### all lineages
+#### by model
+![response_model_all](https://user-images.githubusercontent.com/43461660/185834633-18bbe9d3-6066-40cc-9a9c-4b29773aa9ae.png)
+#### by ensemble
+![response_ensemble_all](https://user-images.githubusercontent.com/43461660/185834642-f681b8a6-6e83-4cd6-be0b-d583d35e46ce.png)
+
+#### vicugna
+#### by model
+![response_model_vicugna](https://user-images.githubusercontent.com/43461660/185834664-f83684bc-6210-4e87-aa26-e433f8ca8d38.png)
+#### byensemble
+![response_ensemble_vicugna](https://user-images.githubusercontent.com/43461660/185834669-e0975c8e-bb1b-46d4-b83f-44f0571ab9bb.png)
+
+#### mensalis
+#### by model
+![response_model_mensalis](https://user-images.githubusercontent.com/43461660/185834711-728805bb-bf64-4f88-b4b6-dd7eb305f35d.png)
+#### by ensemble
+![response_ensemble_mensalis](https://user-images.githubusercontent.com/43461660/185834722-7173afb1-3a2e-45ed-90f6-8b9afa10028e.png)
+
+#### hybrid
+#### by model
+![response_model_hybrid](https://user-images.githubusercontent.com/43461660/185834761-80e13480-0978-4ef9-ab7e-4af1365bddf3.png)
+#### ensemble
+![response_ensemble_hybrid](https://user-images.githubusercontent.com/43461660/185834781-e0b78ee3-4700-4045-8c02-5d851eee10f5.png)
