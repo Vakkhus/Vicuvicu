@@ -435,7 +435,7 @@ La importancia media de cada una de las variables entre los 5 `PA` se detalla a 
 ### vicugna
 #### by model
 ![response_model_vicugna](https://user-images.githubusercontent.com/43461660/185834664-f83684bc-6210-4e87-aa26-e433f8ca8d38.png)
-#### byensemble
+#### by ensemble
 ![response_ensemble_vicugna](https://user-images.githubusercontent.com/43461660/185834669-e0975c8e-bb1b-46d4-b83f-44f0571ab9bb.png)
 
 ### mensalis
@@ -447,5 +447,5 @@ La importancia media de cada una de las variables entre los 5 `PA` se detalla a 
 ### hybrid
 #### by model
 ![response_model_hybrid](https://user-images.githubusercontent.com/43461660/185834761-80e13480-0978-4ef9-ab7e-4af1365bddf3.png)
-#### ensemble
+#### by ensemble
 ![response_ensemble_hybrid](https://user-images.githubusercontent.com/43461660/185834781-e0b78ee3-4700-4045-8c02-5d851eee10f5.png)
