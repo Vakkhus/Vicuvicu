@@ -1,0 +1,123 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(biomod2)
+library(raster)
+library(sf)
+library(tidyverse)
+library(doParallel)
+```
+```{r}
+data=read_sf('S:/UACh/vicuñas/Database_jul2022/allvicugnas_jul2022.gpkg')
+limite=read_sf('D:/Descargas/drive-download-20211123T151708Z-001/Teow_vicugna1/teow_vicugna1.shp')
+setwd('S:/UACh/vicuñas/chelsa_historico/bio/')
+lista=list.files('S:/UACh/vicuñas/chelsa_historico/bio/',pattern = '.tif')
+bio=stack(lista)
+biof=stack(mask(crop(bio,st_zm(limite)),st_zm(limite)))
+gc()
+```
+
+```{r}
+setwd('S:/UACh/vicuñas/chelsa_historico/bio/')
+MyBiomodSF <- function(i){
+  print(i)
+  #par(mfrow=c(3,1))
+  #for (i in c("mensalis","hybrid","vicugna")){
+    
+    if (i=="mensalis"){bio=biof[[c("bio1","bio2","bio3","bio4","bio6","bio7","bio8","bio10","bio12","bio14","bio15","bio19")]]}
+    if (i=="hybrid"){bio=biof[[c("bio1","bio2","bio3","bio4","bio6","bio7","bio8","bio10","bio12","bio14","bio15","bio19")]]}
+    if (i=="vicugna"){bio=biof[[c("bio1","bio2","bio3","bio4","bio6","bio7","bio8","bio10","bio12","bio14","bio15","bio19")]]}
+    if (i=='all'){bio=biof[[c("bio1","bio2","bio3","bio4","bio6","bio7","bio8","bio10","bio12","bio14","bio15","bio19")]]}
+    myRespName <- i
+    data_resp=as.data.frame(data[which(data$Lineage==myRespName),])[,1:6]
+    if (i=='all'){data_resp=as.data.frame(data[which(data$Lineage=='vicugna'|data$Lineage=='hybrid'|data$Lineage=='mensalis'),])[,1:6]}
+    data_resp$val=1
+    myResp <- as.numeric(data_resp$val)
+    myRespXY <- data_resp[,c("Longitude","Latitude")]
+    myExpl = bio
+    gc()
+    
+    set.seed(707)
+    myBiomodData <- BIOMOD_FormatingData(resp.var = myResp,
+    expl.var = myExpl,
+    resp.xy = myRespXY,
+    resp.name = myRespName,
+    PA.nb.rep=5,
+    PA.nb.absences=5*length(data_resp$val),
+    PA.strategy='random')
+    gc()
+    if (i=="mensalis"){ds=17}
+    if (i=="hybrid"){ds=20}
+    if (i=="vicugna"){ds=10}
+    if (i=="all"){ds=10}
+
+    set.seed(707)
+    myBiomodModelOut=BIOMOD_Modeling(
+    data=myBiomodData,
+    models = c("GBM","RF","MAXENT.Phillips"),
+    NbRunEval=20,
+    DataSplit=ds,
+    VarImport = 5,
+    models.eval.meth = c("KAPPA", "TSS", "ROC","ACCURACY"),
+    SaveObj = TRUE,
+    do.full.models = TRUE
+    )
+    
+    set.seed(707)
+    myBiomodEM=BIOMOD_EnsembleModeling(myBiomodModelOut,
+    chosen.models = 'all',
+    prob.mean=TRUE,
+    prob.cv =TRUE,
+    VarImport=5)
+    
+    myBiomodProjection <- BIOMOD_Projection(
+    modeling.output = myBiomodModelOut,
+    new.env = myExpl,
+    proj.name = 'curr',
+    compress = TRUE,
+    build.clamping.mask = FALSE,
+    keep.in.memory=FALSE)
+    
+    # 4. Creating the ensemble projections
+    BIOMOD_EnsembleForecasting( projection.output = myBiomodProjection,
+    EM.output = myBiomodEM)
+    
+    #var_imp=myBiomodEM@em.models[[length(myBiomodEM@em.models)-1]]@model_variables_importance
+    #var_imp=as.data.frame(rowMeans(var_imp))
+    
+    #rownames(var_imp)=rownames(var_imp)[order(var_imp$'rowMeans(var_imp)',decreasing=TRUE)]
+    #var_imp$'rowMeans(var_imp)'=var_imp[order(var_imp$'rowMeans(var_imp)',decreasing=TRUE),]
+    
+    #barplot(height = var_imp$'rowMeans(var_imp)',names=row.names(var_imp),main=paste('variable importance',myRespName))
+    
+  #}
+}
+
+## Init snowfall
+library(snowfall)
+sfInit(parallel=TRUE, cpus=4)
+## Export packages
+sfLibrary('biomod2', character.only=TRUE)
+sfLibrary('raster', character.only=TRUE)
+sfLibrary('sf', character.only=TRUE)
+## Export variables
+sp.names=c("vicugna","all")
+sfExportAll() 
+## Do the run
+mySFModelsOut <- sfLapply(sp.names, MyBiomodSF)
+## stop snowfall
+sfStop(nostop=FALSE)
+
+#proj=raster('S:/UACh/vicuñas/chelsa_historico/bio/mensalis/proj_current/proj_current_mensalis_ensemble.grd')
+#PA=st_as_sf(x=myBiomodData@coord[which(myBiomodData@PA==TRUE),],coords = c('Longitude','Latitude'))
+
+
+#load('S:/UACh/vicuñas/chelsa_historico/bio/mensalis/mensalis.1636687400.models.out')
+#load('S:/UACh/vicuñas/chelsa_historico/bio/vicugna/vicugna.1636702964.models.out')
+#load('S:/UACh/vicuñas/chelsa_historico/bio/hybrid/hybrid.1636695480.models.out')
+```
+
+on_0_1000:logical, if TRUE (default), 0 - 1 probabilities are converted into a 0 - 1000 integer scale. This implies a lot of memory saving. User that want to comeback on a 0 - 1 scale latter will just have to divide all projections by 1000
