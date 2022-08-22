@@ -400,3 +400,26 @@ Si graficamos el modelo anterior para el linaje mensalis, pero esta vez para cad
 
 <img width="569" alt="image" src="https://user-images.githubusercontent.com/43461660/159518307-5964844c-a812-478d-b330-00b6c72390de.png">
 
+# **Modelos con variables climáticas relevantes para la especie (08-2022)**
+
+A partir de un análisis de componentes principales se estableció un set de variables relevantes para la especie, y se contruyeron modelos de distribución usando la metodología anterior e incorporando todas las variables de este set. Las variables seleccionadas fueron: "bio1", "bio2", "bio3", "bio4",  "bio6", "bio7", "bio8", "bio10", "bio12", "bio14", "bio15" y"bio19".
+
+La importancia media de cada una de las variables entre los 5 `PA` se detalla a continuación:
+
+|       | vicugna     | mensalis    | hybrid      |all lineages     |
+
+|-------|-------------|-------------|-------------|-------------|
+| bio1  |0.229|0.190|0.058 |0.277|
+| bio2  |0.283|0.170|0.180|0.255|
+| bio3  |0.112|0.113|0.054|0.119|
+| bio4  |0.160|0.126|0.061|0.119|
+| bio6  |0.292|0.185|0.142|0.257|
+| bio7  |0.185|0.114|0.053|0.124|
+| bio8  |0.117|0.158|0.043|0.128|
+| bio10 |0.198|0.434|0.058|0.253|
+| bio12 |0.125|0.068|0.042|0.118|
+| bio14 |0.043|0.038|0.032|0.044|
+| bio15 |0.055|0.038|0.250|0.057|
+| bio19 |0.055|0.100|0.092|0.092|
+
+
